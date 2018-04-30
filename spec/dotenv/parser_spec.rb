@@ -5,6 +5,16 @@ describe Dotenv::Parser do
     Dotenv::Parser.call(string, true)
   end
 
+  it "parse empty examples" do
+    expect(env("")).to eql({})
+
+    expect(env("\n\n\n")).to eql({})
+
+    expect(env("# comment")).to eql({})
+    expect(env(" # comment ")).to eql({})
+    expect(env("\n# comment \n\n#comment 2")).to eql({})
+  end
+
   it "parses unquoted values" do
     expect(env("FOO=bar")).to eql("FOO" => "bar")
   end
